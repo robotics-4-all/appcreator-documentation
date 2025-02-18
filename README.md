@@ -10,7 +10,7 @@ Finally, a design decision was to not support passing values from one node to an
 
 Next, the documentation of the two basic AppCreator toolboxes will be given, that offer the basis for all apps to be created.
 
-## 1. Before the toolboxes...
+## 1. Some background knowledge
 
 ### 1.1 Variables value substitution
 
@@ -30,13 +30,32 @@ This way, first the variables' values are substituted and the expression becomes
 
 This has several implications, since this way you can use actual Python libraries, e.g. `|math.min({x})^5|`.
 
-### 1.3 Nodes connectivity rules
+### 1.3 Variables as data structures
+
+In the case where a variable is a list or a json object (dictionary), you can access its elements using the dot notation. 
+
+If we have a list `my_list = [0, 4, 7, 9]`, you can use `{my_list.1}` to get the element in the 1st place, i.e. 4.
+
+If we have a dictionary like the following:
+```
+robot_pose_x = {
+    pose: {
+        x: 5
+        y: 8.4
+        theta: 0.34
+    }
+}
+```
+
+you can access x like this: `{robot_pose_x.pose.x}`.
+
+### 1.4 Nodes connectivity rules
 
 There are two rules when connecting nodes:
 - No input and output handles must remain unconnected. If you leave them unconnected, the validation will fail
 - You can connect each output handle only once, but every input handle multiple times. This means that each output directs to a single node, but each input can be visited by many nodes.
 
-### 1.4 Nodes properties
+### 1.5 Nodes properties
 
 Some nodes have a little cog icon by their side. This means that they have properties that can be configured. Press the cog to see them.
 
@@ -44,7 +63,7 @@ If an orange exclamation mark exists besides a node, this means that it contains
 
 ![alt text](image-4.png)
 
-## AppCreator environment and Hello world
+## 2. AppCreator environment and Hello world
 
 This is how the AppCreator environment looks like:
 
@@ -71,42 +90,131 @@ If your model is validated, a green indication will appear, and the `Deploy code
 
 If you **really** want to deploy, do what it tells you and press Continue!
 
-## 2. The Utilities toolbox
+## 3. The Utilities toolbox
 
-### *Start*
+### § *Start*
 
 The Start node must exist in each application, since the deployment starts from there. Its configuration has one property called `Artificial delay`. This is measured in seconds and denotes a delay that will be added after each node's execution. Use this in order to have time to see the actual flow.
 
 Fun fact: you can have multiple Start nodes in your application. This means that the flows starting from these nodes will be initialized and executed in parallel.
 
-### *End*
+### § *End*
 
 If you have a Start node, you must also have an End node. The End node is just the final node of an application, nothing more, nothing less.
 
-### *Delay*
+### § *Delay*
 
-### *Thread split*
+The Delay node is used to introduce a delay in the execution of the flow. It has one obligatory parameter, which is the delay is seconds.
 
-### *Thread join*
+This parameter is evaluated, thus you can use variables as well (e.g. `{x}` where x is 3, will result in 3 seconds of delay).
 
-### *Condition*
+### § *Log*
 
-### *Random*
+Log is an assistive node which prints whatever expression you add as its parameter. It has one parameter which is handled as a string, and it is evaluated as explained in sections 1.1 and 1.2.
 
-### *Preempt*
+The results appear in the "Application logs" section at the right column, as such:
 
-### *Log*
+![alt text](image-5.png)
 
-## 3. The Advanced toolbox
+### § *Random*
 
-### *Create variable*
+Random is a node that allows for randomness in the flow. It has the following typical form, which includes one entry point and N output handles, where `N>1`.
 
-### *Set variable*
+![alt text](image-6.png)
 
-### *Create list*
+As evident, this node has two buttons denoted with the plus and minus signs `(+, -)`. If you press the `+` one more output is added, and the last output is removed when you press the `-`.
 
-### *List operation*
+The configuration of a Random node with 3 outputs is evident below:
 
-### *List math operation*
+![alt text](image-7.png)
+
+Each input box is associated with its respective output and the number inside represents the possibility of randomly selecting this exact output. E.g. in the above image, output 1 will be selected with a probability of 0.2 (or 2 out of 10 times), whereas output 3 will be randomly selected with a probability of 0.7. In the specific example, the sum of all numbers equals 1.0, but this is not a limitation for this node. You can include whatever numbers you want, and the probability will be computed relatively to the sum of these numbers.
+
+For example in the below case, output 2 will be selected with a probability of 9/(12+9+3) = 9/24.
+
+![alt text](image-8.png)
+
+### § *Condition*
+
+Condition is another node with 1 input and N outputs, where N>1. A typical view of a Condition node with 3 outputs is the following:
+
+![alt text](image-9.png)
+
+Here, you declare N-1 conditions, and a "default" condition exists which is always True. The conditions are checked in the order of appearance, thus first Condition #1 will be evaluated, if it is False Condition #2 will be evaluated, and if it is False, the Default condition will be always met. Thus, since a default condition always exist you do not have to create all conditions that are logically complementary.
+
+Each input text for each condition is evaluated, thus you can include `{}` for variables substitution or `||` for pythonic evaluation. In the aove example, if variable `x` is smaller than 5 the first output is selected, if it is larger than 10 the second output is selected, and it it is neither (thus `5 <= x <= 10`) the third output is selected.
+
+### § *Thread split* and *Thread join*
+
+The Thread split and Thread join nodes offer parallelism in your applications. As we said, AppCreator offers a synchronous, FSM-like flow from node to node. If you want process to be executed in parallel you must use a Thread split node.
+
+A typical Thread split node with 3 outputs is evident below. When this is used, three threads will initiate and be executed in parallel, deploying the subflows connected to the three outputs.
+
+![alt text](image-10.png)
+
+The parallelism stops in a Thread join node. This node has N inputs and one output. Each of the inputs handles the ending of a thread, and the node concludes its execution when all the incoming threads are done.
+
+A simple example follows:
+
+![alt text](image-11.png)
+
+Here the application will start and two delays will be executed in parallel (3 and 10 seconds).
+The 3 seconds delay will end after 3 seconds (duh) and the execution flow will reach the input 0 of the join node. Since the second thread (the one with the 10 seconds delay) has not finished yet, the application execution stays in the join node for another 7 seconds, when the 10 second delay terminates as well. Then the application terminates.
+
+### § *Preempt*
+
+Even though the Thread nodes are powerful to handle real world problems, where several things happen at the same time, you will find out that you will usually combine them with the Preempt node. 
+
+to be continued...
+
+### § *Create variable*
+
+This node allows for declaring the creation of a new variable. A typical example of this node is the following:
+
+![alt text](image-12.png)
+
+In this node you must declare the variable's name (which is restricted according to pythonic variables naming rules), and the variable's initial value. The value can be a number, a string or an expression that will be evaluated (e.g. `|{x} + 2|`).
+This variable falls under the category of "Custom" variables, to differentiate them from variables that are automatically introduced from 3rd party toolboxes. Thus, these variables are also visible in the right column, under the "Custom variables" section.
+
+### § *Set variable*
+
+This node updates the value of a variable that has been created using the "Create variable" node. A typical example is this:
+
+![alt text](image-13.png)
+
+Here, a variable called `variable_21` is created with an initial value of 15, and then its value is set to `3 * {variable_21}`, thus the final value is 45 (as shown in the live variables section at the right).
+
+### § *Create list*
+
+The Create list node... creates a list! A typical example of the Create list node is the following:
+
+![alt text](image-14.png)
+
+It should be stated that a list is a custom variable as well, but it is kept in a different place (the Custom lists section at the right) to be easier to distinguish. Like the custom variables you need to provide a name, and a set of initial elements by adding a value and pressing Enter (return).
+
+### § *Manage list*
+
+This node offers standard functions over lists, i.e. to delete an element, to add an element, and to order (ascending or descending). A typical view of this node follows:
+
+![alt text](image-15.png)
+
+The name of the list must be declared, and the operation should be selected from a dropdown.
+An example application where a list is created, is ordered in ascending order and the first element is logged follows:
+
+![alt text](image-17.png)
+
+It should be stated that this node performs operations on the list itself, thus it changes its structure.
+
+### § *List operation*
+
+This node offers specific list-oriented mathematical operations, applied in a created list. Since the outcome of this node is a value (or values), the user is prompted to store the result in a custom variable. A typical example of this node is the following:
+
+![alt text](image-18.png)
+
+Here, the average of the elements of list `my_list` is computed and stored in variable `avg_my_list`. The result is the following:
+
+![alt text](image-19.png)
 
 # Examples
+
+to be created...
