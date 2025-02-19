@@ -165,7 +165,20 @@ The 3 seconds delay will end after 3 seconds (duh) and the execution flow will r
 
 Even though the Thread nodes are powerful to handle real world problems, where several things happen at the same time, you will find out that you will usually combine them with the Preempt node. 
 
-to be continued...
+Preemption is an operation that can stop (kill) a whole thread. For example, if you have a Thread node with two outputs (thus it creates two threads), and at output 1 (the last) you add a Delay of 1 second and then a Preempt node, for which you select the kill the above thread, the whole execution of this thread will stop after 1 second.
+
+Let's see a more realistic (and complex) example:
+
+![alt text](image-20.png)
+
+Here we create a variable called `x` with initial value equal to 0, and then we create a thread split with two threads. The first thread (Node 11, output 0) executes a delay and increases the value of `x` by 1 for eternity.
+The second thread (Node 11, output 1) executes in a loop a delay and a condition that checks if `x>10`. If no, the execution repeats the delay/condition pair. If yes, the flow reaches a preempt node, which kills the Thread 11, output 0 (so it stops the above thread and variable `x` stops to increase).
+
+The catch here is that the Thread join node has only 1 input connection, since thread 0 is eternal, thus it never "joins". When the preemption happens, thread #1 joins, thread #0 terminates and the flow reaches the End node.
+
+Even though this application could be created by designing a simple loop that included the variable update, delay and condition, there are cases where specific nodes are used which are blocking and last several seconds or even minutes, therefore, preemption is the proper way to kill them. Futhermore preemption is a way to stop several threads (not only one).
+
+**Disclaimer**: When you are using Preemptions you must know what you are doing! It is proposed to use Preemptions to kill threads that originate from the same Thread Split node the actual Preemption is in, else you must REALLY know what you are doing!
 
 ### § *Create variable*
 
