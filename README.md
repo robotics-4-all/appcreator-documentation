@@ -61,13 +61,13 @@ Some nodes have a little cog icon by their side. This means that they have prope
 
 If an orange exclamation mark exists besides a node, this means that it contains some properties that are obligatory and have not been set. Example:
 
-![alt text](image-4.png)
+![alt text](./assets/image-4.png)
 
 ## 2. AppCreator environment and Hello world
 
 This is how the AppCreator environment looks like:
 
-![alt text](image.png)
+![alt text](./assets/image.png)
 
 There are three distinct areas:
 - At the left we can see the **toolboxes** column. It contains all nodes of both the basic and other toolboxes, as well as options for the connectivity visualization of the application.
@@ -76,17 +76,17 @@ There are three distinct areas:
 
 The hello world application of AppCreator contains two nodes, the Start and End node, which must always exist in any application. So the Hello world app looks like this:
 
-![alt text](image-1.png)
+![alt text](./assets/image-1.png)
 
 At the top right of the AppCreator window there is a green button called `Validate model`. If you press this several consistency and sanity checks will be performed to your model, in order to be sure that the **structure** of the application is correct. Unfortunately, we cannot do this for the **logic** of your app, so you are responsible if anything goes wrong!
 
 If any mistakes exist, a) they will appear at the top of the **logs and variables** column, b) the corresponding nodes will have a red highlight, and c) a bug icon will also appear in the respective nodes, which on hover will show you the error. For example, in the following application, two mistakes exist (the connections are missing).
 
-![alt text](image-2.png)
+![alt text](./assets/image-2.png)
 
 If your model is validated, a green indication will appear, and the `Deploy code` orange button will appear. If you press the `Deploy code` button, you will see the following message:
 
-![alt text](image-3.png)
+![alt text](./assets/image-3.png)
 
 If you **really** want to deploy, do what it tells you and press Continue!
 
@@ -114,31 +114,31 @@ Log is an assistive node which prints whatever expression you add as its paramet
 
 The results appear in the "Application logs" section at the right column, as such:
 
-![alt text](image-5.png)
+![alt text](./assets/image-5.png)
 
 ### § *Random*
 
 Random is a node that allows for randomness in the flow. It has the following typical form, which includes one entry point and N output handles, where `N>1`.
 
-![alt text](image-6.png)
+![alt text](./assets/image-6.png)
 
 As evident, this node has two buttons denoted with the plus and minus signs `(+, -)`. If you press the `+` one more output is added, and the last output is removed when you press the `-`.
 
 The configuration of a Random node with 3 outputs is evident below:
 
-![alt text](image-7.png)
+![alt text](./assets/image-7.png)
 
-Each input box is associated with its respective output and the number inside represents the possibility of randomly selecting this exact output. E.g. in the above image, output 1 will be selected with a probability of 0.2 (or 2 out of 10 times), whereas output 3 will be randomly selected with a probability of 0.7. In the specific example, the sum of all numbers equals 1.0, but this is not a limitation for this node. You can include whatever numbers you want, and the probability will be computed relatively to the sum of these numbers.
+Each input box is associated with its respective output and the number inside represents the possibility of randomly selecting this exact output. E.g. in the above ./assets/image, output 1 will be selected with a probability of 0.2 (or 2 out of 10 times), whereas output 3 will be randomly selected with a probability of 0.7. In the specific example, the sum of all numbers equals 1.0, but this is not a limitation for this node. You can include whatever numbers you want, and the probability will be computed relatively to the sum of these numbers.
 
 For example in the below case, output 2 will be selected with a probability of 9/(12+9+3) = 9/24.
 
-![alt text](image-8.png)
+![alt text](./assets/image-8.png)
 
 ### § *Condition*
 
 Condition is another node with 1 input and N outputs, where N>1. A typical view of a Condition node with 3 outputs is the following:
 
-![alt text](image-9.png)
+![alt text](./assets/image-9.png)
 
 Here, you declare N-1 conditions, and a "default" condition exists which is always True. The conditions are checked in the order of appearance, thus first Condition #1 will be evaluated, if it is False Condition #2 will be evaluated, and if it is False, the Default condition will be always met. Thus, since a default condition always exist you do not have to create all conditions that are logically complementary.
 
@@ -150,13 +150,13 @@ The Thread split and Thread join nodes offer parallelism in your applications. A
 
 A typical Thread split node with 3 outputs is evident below. When this is used, three threads will initiate and be executed in parallel, deploying the subflows connected to the three outputs.
 
-![alt text](image-10.png)
+![alt text](./assets/image-10.png)
 
 The parallelism stops in a Thread join node. This node has N inputs and one output. Each of the inputs handles the ending of a thread, and the node concludes its execution when all the incoming threads are done.
 
 A simple example follows:
 
-![alt text](image-11.png)
+![alt text](./assets/image-11.png)
 
 Here the application will start and two delays will be executed in parallel (3 and 10 seconds).
 The 3 seconds delay will end after 3 seconds (duh) and the execution flow will reach the input 0 of the join node. Since the second thread (the one with the 10 seconds delay) has not finished yet, the application execution stays in the join node for another 7 seconds, when the 10 second delay terminates as well. Then the application terminates.
@@ -169,7 +169,7 @@ Preemption is an operation that can stop (kill) a whole thread. For example, if 
 
 Let's see a more realistic (and complex) example:
 
-![alt text](image-20.png)
+![alt text](./assets/image-20.png)
 
 Here we create a variable called `x` with initial value equal to 0, and then we create a thread split with two threads. The first thread (Node 11, output 0) executes a delay and increases the value of `x` by 1 for eternity.
 The second thread (Node 11, output 1) executes in a loop a delay and a condition that checks if `x>10`. If no, the execution repeats the delay/condition pair. If yes, the flow reaches a preempt node, which kills the Thread 11, output 0 (so it stops the above thread and variable `x` stops to increase).
@@ -184,7 +184,7 @@ Even though this application could be created by designing a simple loop that in
 
 This node allows for declaring the creation of a new variable. A typical example of this node is the following:
 
-![alt text](image-12.png)
+![alt text](./assets/image-12.png)
 
 In this node you must declare the variable's name (which is restricted according to pythonic variables naming rules), and the variable's initial value. The value can be a number, a string or an expression that will be evaluated (e.g. `|{x} + 2|`).
 This variable falls under the category of "Custom" variables, to differentiate them from variables that are automatically introduced from 3rd party toolboxes. Thus, these variables are also visible in the right column, under the "Custom variables" section.
@@ -193,7 +193,7 @@ This variable falls under the category of "Custom" variables, to differentiate t
 
 This node updates the value of a variable that has been created using the "Create variable" node. A typical example is this:
 
-![alt text](image-13.png)
+![alt text](./assets/image-13.png)
 
 Here, a variable called `variable_21` is created with an initial value of 15, and then its value is set to `3 * {variable_21}`, thus the final value is 45 (as shown in the live variables section at the right).
 
@@ -201,7 +201,7 @@ Here, a variable called `variable_21` is created with an initial value of 15, an
 
 The Create list node... creates a list! A typical example of the Create list node is the following:
 
-![alt text](image-14.png)
+![alt text](./assets/image-14.png)
 
 It should be stated that a list is a custom variable as well, but it is kept in a different place (the Custom lists section at the right) to be easier to distinguish. Like the custom variables you need to provide a name, and a set of initial elements by adding a value and pressing Enter (return).
 
@@ -209,12 +209,12 @@ It should be stated that a list is a custom variable as well, but it is kept in 
 
 This node offers standard functions over lists, i.e. to delete an element, to add an element, and to order (ascending or descending). A typical view of this node follows:
 
-![alt text](image-15.png)
+![alt text](./assets/image-15.png)
 
 The name of the list must be declared, and the operation should be selected from a dropdown.
 An example application where a list is created, is ordered in ascending order and the first element is logged follows:
 
-![alt text](image-17.png)
+![alt text](./assets/image-17.png)
 
 It should be stated that this node performs operations on the list itself, thus it changes its structure.
 
@@ -222,11 +222,11 @@ It should be stated that this node performs operations on the list itself, thus 
 
 This node offers specific list-oriented mathematical operations, applied in a created list. Since the outcome of this node is a value (or values), the user is prompted to store the result in a custom variable. A typical example of this node is the following:
 
-![alt text](image-18.png)
+![alt text](./assets/image-18.png)
 
 Here, the average of the elements of list `my_list` is computed and stored in variable `avg_my_list`. The result is the following:
 
-![alt text](image-19.png)
+![alt text](./assets/image-19.png)
 
 # Examples
 
