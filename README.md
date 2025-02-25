@@ -161,24 +161,24 @@ A simple example follows:
 Here the application will start and two delays will be executed in parallel (3 and 10 seconds).
 The 3 seconds delay will end after 3 seconds (duh) and the execution flow will reach the input 0 of the join node. Since the second thread (the one with the 10 seconds delay) has not finished yet, the application execution stays in the join node for another 7 seconds, when the 10 second delay terminates as well. Then the application terminates.
 
-### § *Preempt*
+### § *Kill process*
 
 Even though the Thread nodes are powerful to handle real world problems, where several things happen at the same time, you will find out that you will usually combine them with the Preempt node. 
 
-Preemption is an operation that can stop (kill) a whole thread. For example, if you have a Thread node with two outputs (thus it creates two threads), and at output 1 (the last) you add a Delay of 1 second and then a Preempt node, for which you select the kill the above thread, the whole execution of this thread will stop after 1 second.
+Kill process is an operation that can stop (kill) a whole thread. For example, if you have a Thread node with two outputs (thus it creates two threads), and at output 1 (the last) you add a Delay of 1 second and then a Kill node, for which you select the kill the above thread, the whole execution of this thread will stop after 1 second.
 
 Let's see a more realistic (and complex) example:
 
 ![alt text](./assets/image-20.png)
 
 Here we create a variable called `x` with initial value equal to 0, and then we create a thread split with two threads. The first thread (Node 11, output 0) executes a delay and increases the value of `x` by 1 for eternity.
-The second thread (Node 11, output 1) executes in a loop a delay and a condition that checks if `x>10`. If no, the execution repeats the delay/condition pair. If yes, the flow reaches a preempt node, which kills the Thread 11, output 0 (so it stops the above thread and variable `x` stops to increase).
+The second thread (Node 11, output 1) executes in a loop a delay and a condition that checks if `x>10`. If no, the execution repeats the delay/condition pair. If yes, the flow reaches a Kill node, which kills the Thread 11, output 0 (so it stops the above thread and variable `x` stops to increase).
 
-The catch here is that the Thread join node has only 1 input connection, since thread 0 is eternal, thus it never "joins". When the preemption happens, thread #1 joins, thread #0 terminates and the flow reaches the End node.
+The catch here is that the Thread join node has only 1 input connection, since thread 0 is eternal, thus it never "joins". When the Kill happens, thread #1 joins, thread #0 terminates and the flow reaches the End node.
 
-Even though this application could be created by designing a simple loop that included the variable update, delay and condition, there are cases where specific nodes are used which are blocking and last several seconds or even minutes, therefore, preemption is the proper way to kill them. Futhermore preemption is a way to stop several threads (not only one).
+Even though this application could be created by designing a simple loop that included the variable update, delay and condition, there are cases where specific nodes are used which are blocking and last several seconds or even minutes, therefore, killing is the proper way to kill them. Futhermore killing is a way to stop several threads (not only one).
 
-**Disclaimer**: When you are using Preemptions you must know what you are doing! It is proposed to use Preemptions to kill threads that originate from the same Thread Split node the actual Preemption is in, else you must REALLY know what you are doing!
+**Disclaimer**: When you are using Kill nodes you must know what you are doing! It is proposed to use Kill to kill threads that originate from the same Thread Split node the actual Kill is in, else you must REALLY know what you are doing!
 
 ### § *Create variable*
 
@@ -228,6 +228,73 @@ Here, the average of the elements of list `my_list` is computed and stored in va
 
 ![alt text](./assets/image-19.png)
 
-# Examples
+## 4. The EnvPop toolbox
 
-to be created...
+LocSys provides the [EnvPop](https://locsys.issel.ee.auth.gr/dsls/envpop) to AppCreator transformation, allowing to create graphical applications for IoT and Cyber Physical Systems. EnvPop is a graphical domain specific language that describes a world, along with its elements, and can be simulated via [Streamsim](https://github.com/robotics-4-all/streamsim), a simple 2D simulator developed in Python. EnvPop provides several sensors, effectors, actors and robotic devices to describe a fully functional world, and Streamsim brings it to life.
+
+As aforementioned, EnvPop supports transformation to AppCreator, meaning that the described elements are transformed into toolboxes and available variables. Instead of describing all node separately, a explanation of what each EnvPop element provides will follow.
+
+### § *Start and Stop simulation*
+
+When you transform from EnvPop, you will see two new nodes, named `Start Simulation` and `Stop Simulation`. 
+
+The Start simulation node essentially selects an EnvPop model and dispatches it to Streamsim in order to start the simulation. Start simulation has a predefined selection of the EnvPop model from which it was transformed into.
+
+On the contrary, Stop Simulation does not have any parameters, since it just stops the active simulation. It is important to remember to **use this node if you have used a Start Simulation node**, so as for the simulation to end gracefully.
+
+### § *Humidifier effector*
+
+The humidifier environmental effector acts as a hummidifer and dehumidifier at the same time. It provides a simplified functionality, where you set a humidity and it tries to set the humidity nearby at the same level.
+Humidifier offers a `set` node, where you can declare the humidity and an initiator, like such:
+
+![alt text](assets/humidifier.png)
+
+The humidity value is a percentage (0-100) and in the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
+
+Furthermore, humidifier offers the `NAME.state`, where name is the device's name as declared in EnvPop, which is updated when the state of the device changes (for the image above the variable is `ef_humidifier_118.state`).
+
+### § *Light effector*
+
+### § *Relay effector*
+
+### § *Speaker effector*
+
+### § *Thermostat effector*
+
+### § *Ambient light sensor*
+
+### § *Area alarm sensor*
+
+### § *Camera sensor*
+
+### § *Distance sensor*
+
+### § *Gas sensor*
+
+### § *Humidity sensor*
+
+### § *Linear alarm sensor*
+
+### § *Microphone sensor*
+
+### § *pH sensor*
+
+### § *Temperature sensor*
+
+### § *Robot*
+
+#### § *Microphone*
+
+#### § *Camera*
+
+#### § *IMU*
+
+#### § *Environmental*
+
+#### § *Speaker*
+
+#### § *LEDs*
+
+#### § *RFID reader*
+
+#### § *Sonars*
