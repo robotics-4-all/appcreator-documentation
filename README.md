@@ -279,7 +279,7 @@ As evident, you can set its state with a dropdown menu, including only the suppo
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
-Relays offer only one variable, namely `NAME.state`, where `NAME is the name of the device.
+Relays offer only one variable, namely `NAME.state`, where NAME is the name of the device.
 
 ### § *Speaker effector*
 
@@ -299,7 +299,7 @@ A thermostat provides a `set` node, where you declare the temperature, as such:
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
-Thermostats offer only one variable, namely `NAME.state`, where `NAME is the name of the device.
+Thermostats offer only one variable, namely `NAME.state`, where NAME is the name of the device.
 
 ### § *Ambient light sensor*
 
@@ -526,7 +526,6 @@ This node offers the functionality to detect an element on demand. By detect, we
 - Humans by detecting Sound, Language, Emotion, SpeechToText (what is being said)
 
 A microphone offers several variables, namely:
-- `NAME_state.state` denoting whether it is on or off
 - `NAME.detection.sound.result`: Boolean
 - `NAME.detection.sound.value`: The value related to the detection (what has been detected)
 - `NAME.detection.language.result`: Boolean
@@ -540,7 +539,7 @@ It must be stated that the sensor detects the element of the desired type that i
 
 #### § *Camera*
 
-Cameras are sensors that capture an instance of the environment. For simplification reasons, a camera offers one nodes, named `detect`An example follows:
+Cameras are sensors that capture an instance of the environment. For simplification reasons, a camera offers one nodes, named `detect`. An example follows:
 
 ![alt text](assets/robot_camera.png)
 
@@ -554,7 +553,6 @@ This node offers the functionality to detect an element on demand. By detect, we
 - Other robots
 
 A camera offers several variables, namely:
-- `NAME_state.state` denoting whether it is on or off
 - `NAME.detection.face.result`: Boolean
 - `NAME.detection.face.value`: The value related to the detection (what has been detected)
 - `NAME.detection.gender.result`: Boolean
