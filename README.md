@@ -655,6 +655,50 @@ It offers two variables, namely:
 - `NAME.state.pan`
 - `NAME.state.tilt`
 
+#### § Robot motion
+
+Robots can move. In our case, you can control the motion in different ways. AppMaker offers 5 different ways to handle a robot, all of which directly, or indirectly, set the robot's linear and rotational velocities. Linear velocity defines how the robot moves linearly (front-back), whereas rotational (aka angular) velocity defines how quick the robot turns.
+
+##### I: Velocity set
+
+The velocity set node explicitly sets the linear and rotational velocities of the robot. The robot **keeps these velocities** until a new similar command exists. A typical example is the following:
+
+![alt text](assets/robot_velocity_set.png)
+
+##### II: Move distance
+
+The move distance node offers a layer of automation, since you can declare a linear velocity and a distance, and the robot will traverse this distance with the declared velocity and then it will stop. A typical example follows:
+
+![alt text](assets/robot_move_distance.png)
+
+This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion.
+
+##### III: Move duration
+
+The move duration node offers a layer of automation, since you can declare a set of linear/angular velocity and a duration, and the robot will take these values and will stop after the duration. A typical example follows:
+
+![alt text](assets/robot_move_duration.png)
+
+This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion.
+
+##### IV: Turn
+
+The turn node offers a layer of automation, since you can declare an angular velocity and an angle, and the robot will turn until it traverses the declared angle. A typical example follows:
+
+![alt text](assets/robot_turn.png)
+
+This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion.
+
+##### V: Go to POI
+
+This node offers the functionality of automatically traversing to a POI (Point of Interest). POIs are denoted in EnvPop as blue dots, and are usually offered as anchors for assistive or important places. This node lets you select the POI to go using a dropdown list, and declare a linear and rotational velocity. An example follows:
+
+![alt text](assets/robot_poi.png)
+
+This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion.
+
+Also **the robot will try to go directly to the POI, thus it does not perform obstacle avoidance**.
+
 # Examples 
 
 Coming soon...
