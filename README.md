@@ -247,7 +247,7 @@ On the contrary, Stop Simulation does not have any parameters, since it just sto
 The humidifier environmental effector acts as a hummidifer and dehumidifier at the same time. It provides a simplified functionality, where you set a humidity and it tries to set the humidity nearby at the same level. It must be stated that humidifier has a range of operation, where its effect is reduced linearly (i.e. the humidity at its pose is the denoted, and 0 at the range's limit).
 Humidifier offers a `set` node, where you can declare the humidity and an initiator, like such:
 
-![alt text](assets/humidifier.png)
+![alt text](./assets/humidifier.png)
 
 The humidity value is a percentage (0-100) and in the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
@@ -257,7 +257,7 @@ Furthermore, humidifier offers the `NAME.state` variable, where name is the devi
 
 The light effector is actually a... light. You can declare the R, G and B channels separately, as well as the luminosity percentage. Lights offer a `set` node, a typical example of which is this:
 
-![alt text](assets/env_light.png)
+![alt text](./assets/env_light.png)
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
@@ -273,7 +273,7 @@ where name is the device's name as declared in EnvPop, which is updated when the
 
 A relay device is a combination of a relay, a switch or a state-defined effector. A relay has a predefined set of states it can take, and provides a `set` node, as shown below:
 
-![alt text](assets/env_relay.png)
+![alt text](./assets/env_relay.png)
 
 As evident, you can set its state with a dropdown menu, including only the supported states for this effector. 
 
@@ -285,7 +285,7 @@ Relays offer only one variable, namely `NAME.state`, where NAME is the name of t
 
 A speaker is a device which produces sound (a speaker!). For simplification purposes, speakers only offer a node named `speak`, where you can declare a string to be dictated, the volume from 0-100 and the language (EN/EL). A typical example of a speaker is the following:
 
-![alt text](assets/env_speaker.png)
+![alt text](./assets/env_speaker.png)
 
 Speakers do not provide any variables.
 
@@ -295,7 +295,7 @@ Thermostats are essentially air-conditions, meaning that you can set a temperatu
 
 A thermostat provides a `set` node, where you declare the temperature, as such:
 
-![alt text](assets/env_thermostat.png)
+![alt text](./assets/env_thermostat.png)
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
@@ -312,7 +312,7 @@ The ambient light sensor returns a luminosity percentage, by aggregating all the
 
 This device offers a `set state` node, where you can turn it on and off, as such:
 
-![alt text](assets/env_ambient_light.png)
+![alt text](./assets/env_ambient_light.png)
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
@@ -324,7 +324,7 @@ The ambient light sensor offers two variables:
 
 The area alarm sensor is triggered when a robot enters its range of operation. This device offers a `set state` node, where you can turn it on and off, as such:
 
-![alt text](assets/area_alarm.png)
+![alt text](./assets/area_alarm.png)
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
@@ -336,13 +336,13 @@ This sensor offers two variables:
 
 Cameras are sensors that capture an instance of the environment. For simplification reasons, a camera offers two nodes `detect` and `set state`. Regarding the `set state` node, a typical example follows:
 
-![alt text](assets/env_camera_state.png)
+![alt text](./assets/env_camera_state.png)
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
 Regarding the `detect` node, an example follows:
 
-![alt text](assets/env_camera_detect.png)
+![alt text](./assets/env_camera_detect.png)
 
 This node offers the functionality to detect an element on demand. By detect, we mean to check if a detectable entity of the declared type is in the field of view of the sensor. Things that you can detect include:
 
@@ -386,7 +386,7 @@ A distance sensor is a pure directional sensor that measures distance to an obst
 
 This device offers a `set state` node, where you can turn it on and off, as such:
 
-![alt text](assets/env_distance.png)
+![alt text](./assets/env_distance.png)
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
@@ -403,7 +403,7 @@ A gas sensor measures the CO2 density at its pose. The gas sensor is affected by
 
 This device offers a `set state` node, where you can turn it on and off, as such:
 
-![alt text](assets/env_gas.png)
+![alt text](./assets/env_gas.png)
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
@@ -419,7 +419,7 @@ The humidity sensor detects the humidity percentage at its pose. It is affected 
 
 This device offers a `set state` node, where you can turn it on and off, as such:
 
-![alt text](assets/env_humidity.png)
+![alt text](./assets/env_humidity.png)
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
@@ -431,7 +431,7 @@ This sensor offers two variables:
 
 The linear alarm sensor is triggered when a robot crosses the line created by its two anchors. This device offers a `set state` node, where you can turn it on and off, as such:
 
-![alt text](assets/linear_alarm.png)
+![alt text](./assets/linear_alarm.png)
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
@@ -443,13 +443,13 @@ This sensor offers two variables:
 
 Microphones can capture sound. Similarly to the cameras, these are complex sensors that are simplified, offering two nodes: `detect` and `set state`. Regarding the `set state` node, a typical example follows:
 
-![alt text](assets/env_microphone_set_state.png)
+![alt text](./assets/env_microphone_set_state.png)
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
 Regarding the `detect` node, an example follows:
 
-![alt text](assets/env_microphone_detect.png)
+![alt text](./assets/env_microphone_detect.png)
 
 This node offers the functionality to detect an element on demand. By detect, we mean to check if a detectable entity of the declared type is in the field of operation of the sensor. Things that you can detect include:
 
@@ -474,7 +474,7 @@ The pH sensor measures the pH at its pose. Right now this sensor is affected onl
 
 This device offers a `set state` node, where you can turn it on and off, as such:
 
-![alt text](assets/env_ph.png)
+![alt text](./assets/env_ph.png)
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
@@ -491,7 +491,7 @@ The temperature sensor measures the temperature at its pose. This sensor is affe
 
 This device offers a `set state` node, where you can turn it on and off, as such:
 
-![alt text](assets/env_temperature.png)
+![alt text](./assets/env_temperature.png)
 
 In the initiator field you can declare a **robot's name** in case this device is defined as a device that can be handled via proximity. In that case, the device can change state only when a robot is nearby and its name is declared in the initiator field.
 
@@ -505,7 +505,7 @@ Even though in EnvPop you cannot drag and drop a pan-tilt effector, you can decl
 
 Pan-tilt is an effector, thus you can set its state like so:
 
-![alt text](assets/env_pan_tilt.png)
+![alt text](./assets/env_pan_tilt.png)
 
 It offers two variables, namely:
 - `NAME.state.pan`
@@ -519,7 +519,7 @@ A robot is a composite device that a) can move on demand, and b) hosts other dev
 
 Microphones can capture sound. Similarly to the cameras, these are complex sensors that are simplified, offering one node named `detect`. An example follows:
 
-![alt text](assets/robot_microphone.png)
+![alt text](./assets/robot_microphone.png)
 
 This node offers the functionality to detect an element on demand. By detect, we mean to check if a detectable entity of the declared type is in the field of operation of the sensor. Things that you can detect include:
 
@@ -541,7 +541,7 @@ It must be stated that the sensor detects the element of the desired type that i
 
 Cameras are sensors that capture an instance of the environment. For simplification reasons, a camera offers one nodes, named `detect`. An example follows:
 
-![alt text](assets/robot_camera.png)
+![alt text](./assets/robot_camera.png)
 
 This node offers the functionality to detect an element on demand. By detect, we mean to check if a detectable entity of the declared type is in the field of view of the sensor. Things that you can detect include:
 
@@ -612,7 +612,7 @@ Humidity values are affected by
 
 A speaker is a device which produces sound (a speaker!). For simplification purposes, speakers only offer a node named `speak`, where you can declare a string to be dictated, the volume from 0-100 and the language (EN/EL). A typical example of a speaker is the following:
 
-![alt text](assets/robot_speak.png)
+![alt text](./assets/robot_speak.png)
 
 Speakers do not provide any variables.
 
@@ -620,7 +620,7 @@ Speakers do not provide any variables.
 
 The leds essentially lights. You can declare the R, G and B channels separately, as well as the luminosity percentage. LEDs offer a `set` node, a typical example of which is this:
 
-![alt text](assets/robot_leds.png)
+![alt text](./assets/robot_leds.png)
 
 Furthermore, if offers the following variables:
 - `NAME.state.r`
@@ -647,7 +647,7 @@ Even though in EnvPop you cannot declare a pan-tilt effector on top a robot in a
 
 Pan-tilt is an effector, thus you can set its state like so:
 
-![alt text](assets/robot_pan_tilt.png)
+![alt text](./assets/robot_pan_tilt.png)
 
 It offers two variables, namely:
 - `NAME.state.pan`
@@ -661,13 +661,13 @@ Robots can move. In our case, you can control the motion in different ways. AppM
 
 The velocity set node explicitly sets the linear and rotational velocities of the robot. The robot **keeps these velocities** until a new similar command exists. A typical example is the following:
 
-![alt text](assets/robot_velocity_set.png)
+![alt text](./assets/robot_velocity_set.png)
 
 ##### II: Move distance
 
 The move distance node offers a layer of automation, since you can declare a linear velocity and a distance, and the robot will traverse this distance with the declared velocity and then it will stop. A typical example follows:
 
-![alt text](assets/robot_move_distance.png)
+![alt text](./assets/robot_move_distance.png)
 
 This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion.
 
@@ -675,7 +675,7 @@ This node is **blocking**, meaning that the flow does not continue until the rob
 
 The move duration node offers a layer of automation, since you can declare a set of linear/angular velocity and a duration, and the robot will take these values and will stop after the duration. A typical example follows:
 
-![alt text](assets/robot_move_duration.png)
+![alt text](./assets/robot_move_duration.png)
 
 This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion.
 
@@ -683,7 +683,7 @@ This node is **blocking**, meaning that the flow does not continue until the rob
 
 The turn node offers a layer of automation, since you can declare an angular velocity and an angle, and the robot will turn until it traverses the declared angle. A typical example follows:
 
-![alt text](assets/robot_turn.png)
+![alt text](./assets/robot_turn.png)
 
 This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion.
 
@@ -691,7 +691,7 @@ This node is **blocking**, meaning that the flow does not continue until the rob
 
 This node offers the functionality of automatically traversing to a POI (Point of Interest). POIs are denoted in EnvPop as blue dots, and are usually offered as anchors for assistive or important places. This node lets you select the POI to go using a dropdown list, and declare a linear and rotational velocity. An example follows:
 
-![alt text](assets/robot_poi.png)
+![alt text](./assets/robot_poi.png)
 
 This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion.
 
