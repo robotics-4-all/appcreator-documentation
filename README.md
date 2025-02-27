@@ -669,7 +669,7 @@ The move distance node offers a layer of automation, since you can declare a lin
 
 ![alt text](./assets/robot_move_distance.png)
 
-This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion.
+This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion, or if **2 minutes have passed without completing the motion**.
 
 ##### III: Move duration
 
@@ -677,7 +677,7 @@ The move duration node offers a layer of automation, since you can declare a set
 
 ![alt text](./assets/robot_move_duration.png)
 
-This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion.
+This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion, or if **2 minutes have passed without completing the motion**.
 
 ##### IV: Turn
 
@@ -685,7 +685,7 @@ The turn node offers a layer of automation, since you can declare an angular vel
 
 ![alt text](./assets/robot_turn.png)
 
-This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion.
+This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion, or if **2 minutes have passed without completing the motion**.
 
 ##### V: Go to POI
 
@@ -693,7 +693,19 @@ This node offers the functionality of automatically traversing to a POI (Point o
 
 ![alt text](./assets/robot_poi.png)
 
-This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion.
+This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion, or if **2 minutes have passed without completing the motion**.
+
+Also **the robot will try to go directly to the POI, thus it does not perform obstacle avoidance**.
+
+##### V: Go to POI (by string)
+
+This node offers the functionality of automatically traversing to a POI (Point of Interest). POIs are denoted in EnvPop as blue dots, and are usually offered as anchors for assistive or important places. This node lets you **write** the POI to go, and declare a linear and rotational velocity. An example follows:
+
+![alt text](./assets/robot_poi_string.png)
+
+In this example a variable is created that holds a POI's name, and this variable is passed as the input in the go to POI node.
+
+This node is **blocking**, meaning that the flow does not continue until the robot has finished its motion, or if **2 minutes have passed without completing the motion**.
 
 Also **the robot will try to go directly to the POI, thus it does not perform obstacle avoidance**.
 
