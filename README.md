@@ -94,13 +94,15 @@ If you **really** want to deploy, do what it tells you and press Continue!
 
 ### § *Start*
 
-The Start node must exist in each application, since the deployment starts from there. Its configuration has one property called `Artificial delay`. This is measured in seconds and denotes a delay that will be added after each node's execution. Use this in order to have time to see the actual flow.
+The Start node must exist in each application, since the deployment starts from there. Its configuration has one property called `Artificial delay`. This is measured in seconds and denotes a delay that will be added after each node's execution. Use this in order to have time to see the actual flow. 
 
 Fun fact: you can have multiple Start nodes in your application. This means that the flows starting from these nodes will be initialized and executed in parallel.
 
+Note: Even if you declare an artificial delay of 0, the AppCreato deployer will enforce a minimum delay of 0.001 in order to internal stuff to properly work!
+
 ### § *End*
 
-If you have a Start node, you must also have an End node. The End node is just the final node of an application, nothing more, nothing less.
+If you have a Start node, you must also have an End node. The End node is just the final node of an application, nothing more, nothing less. The End node includes a delay of 2 seconds, in order for the last messages to properly arrive to LocSys.
 
 ### § *Delay*
 
@@ -273,7 +275,23 @@ When you execute the app you will get this:
 
 meaning that Tab 1 was executed, and the log inside it was executed as well. 
 
-## 4. The EnvPop toolbox
+## 4. The GoalDSL toolbox
+
+GoalDSL is an external Domain-Specific Language (DSL) for the behaviour verification of IoT-enabled CPS applications and systems, based on a goal-driven approach. The general idea is that goal-driven rules can be defined for entities (smart objects, virtual artefacts, etc.) in a CPS, a smart environment or a digital twin.
+
+The AppCreator is directly integrated with GoalDSL, meaning that you can create a GoalDSL model that verifies the behavior of your application, and use it in your AppCreator model. 
+
+The GoalDSL toolbox offers two nodes, `Deploy GoalDSL model` and `Stop GoalDSL model`, as evident from the image below:
+
+![alt text](./assets/goaldsl-toolbox.png)
+
+The `Deploy GoalDSL model` node offers a dropdown containing all the GoalDSL models you have access to (either you are the creator or they exist in a LocSys project that you participate). If you declare one GoalDSL model, and you have the GoalDSL deployer up (see instructions when you press Deploy in the AppCreator model), the verification checks will start and the goals will start dispatching in the AppCreator page, like so:
+
+![alt text](./assets/goaldsl-goals.png)
+
+If you used the `Deploy GoalDSL model` don't forget to declare a `Stop GoalDSL model` at the end of your application, to stop the GoalDSL deployer gracefully.
+
+## 5. The EnvPop toolbox
 
 LocSys provides the [EnvPop](https://locsys.issel.ee.auth.gr/dsls/envpop) to AppCreator transformation, allowing to create graphical applications for IoT and Cyber Physical Systems. EnvPop is a graphical domain specific language that describes a world, along with its elements, and can be simulated via [Streamsim](https://github.com/robotics-4-all/streamsim), a simple 2D simulator developed in Python. EnvPop provides several sensors, effectors, actors and robotic devices to describe a fully functional world, and Streamsim brings it to life.
 
