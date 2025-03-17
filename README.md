@@ -219,6 +219,12 @@ Here, the average of the elements of list `list_2` is computed and stored in var
 
 ![alt text](./assets/average-list.png)
 
+### § *Operations between lists*
+
+This node offers operations that involve two lists. An example follows, where the contents of `list_10` are copied in `list_11`:
+
+![alt text](./assets/lists-operations.png)
+
 ### § *Thread split* and *Thread join*
 
 The Thread split and Thread join nodes offer parallelism in your applications. As we said, AppCreator offers a synchronous, FSM-like flow from node to node. If you want process to be executed in parallel you must use a Thread split node.
