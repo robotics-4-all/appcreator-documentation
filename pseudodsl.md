@@ -8,6 +8,14 @@ The PseudoDSL is textual and resembles languages like Python, C, or Assembly. It
 
 A general rule: all base commands must terminate with a semicolon (C style): `;` 
 
+Furthermore, in front of each expression you can declare a tag as such:
+
+```
+[a] expression here
+```
+
+You can use this tag in the `goto` commands, as explained below.
+
 ## Variables and lists
 PseudoDSL has two types of variables, the **variable**, which holds a single value, and the **list** which contains several values.
 
@@ -197,7 +205,30 @@ This way, the variable `exists` will take the value `True`, since 5 exists in th
 
 ## Conditions
 
+You can declare a condition as such:
+
+```
+var i 0;
+if i == 0 {
+  set i i+1;
+}
+set i i-1;
+```
+
+As evident, you must use the keyword `if`, followed by the expression you want, open curly braces, and put inside all other commands. If the condition is false, the next command, after the closing brace will be executed.
+
 ## Loops
+
+You can implement loops as such:
+
+```
+var i 0, j 10, k;
+loop i 0..j {
+  set k k+i;
+}
+```
+
+As evident
 
 ## Threads and tasks
 
