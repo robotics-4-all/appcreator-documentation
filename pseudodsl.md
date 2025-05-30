@@ -22,7 +22,7 @@ PseudoDSL has two types of variables, the **variable**, which holds a single val
 ### `Declare variables`
 The simplest way to declare a variable is by using the `var` keyword as such:
 
-```
+```js
 var i;
 ```
 
@@ -30,19 +30,19 @@ This means that the variable `i` was generated with no declared initial value. I
 
 You can declare an initial value as such:
 
-```
+```js
 var i 3;
 ```
 
 Furthermore you can declare several variables in one line:
 
-```
+```js
 var i, j 4, k 10, l "test";
 ```
 
 Finally, you can even use other variables to participate in the initial value expression, as long as they have been declared previous to the assigned variable:
 
-```
+```js
 var i 8, j i+2, k i*j;
 ```
 
@@ -50,7 +50,7 @@ var i 8, j i+2, k i*j;
 
 If a variable exists, you can redeclare its value by using `set` as such:
 
-```
+```js
 var i 0;
 set i 10;
 set i i*3;
@@ -60,154 +60,73 @@ set i i*3;
 
 You can declare lists the same way as you do with variables:
 
-```
+```js
 var l [0, 5, 7, 10];
 ```
 
 Or even:
 
-```
+```js
 var i 8, j 9;
 var list [i, j, 11, i+j];
 ```
 
 ## List operations
 
-If we  have declared a list, we can perform several operations on it.
+If we  have declared a list, we can perform several operations on it. These operations are shown in a full example:
 
-### `Set element at index`
+```javascript
+var lst [1,4,7,9,3];
+var i;
 
-For setting a value in a list, at a specific index:
+set i llength(lst); // Sets i equal to the lists length (5)
 
+set i lvalue(lst 2); // Sets i equal to the element of the list at index=2 (third place)
+
+set i lindex(lst 9); // Sets i equal to the index where the value 9 exists
+
+set i lcontains(lst 7); // Sets i=true if value 7 exists in the list
+
+set i lmin(lst); // Sets i equal to the minimum element of the list (1)
+
+set i lmax(lst); // Sets i equal to the maximum element of the list (9)
+
+set i laverage(lst); // Sets i equal to the mean value of the elements of the list
+
+set i lstd(lst); // Sets i equal to the standard deviation of the elements of the list
+
+set lcount(lst 8); // Sets i equal to the number of occurences of 8 in the list (0)
+
+var j 5;
+
+lappend lst j; // Appends the value of variable j at the end of the list
+
+lremove lst 1; // Removes the element with index=1 from the list
+
+linsert lst 0 15; // Inserts the number 15 at the first place of the list (index = 0)
+
+lsort lst asc; // Sorts the list in an ascending manner (or dec for a descending)
+
+lreverse lst; // Reverses the elements of the list
+
+lpop lst 1; // Removes the element at index = 1 **(isn't this the same as lremove??)**
+
+lclear lst; // Removes all elements from the list
+
+lremval lst 5; // Removes all occurences of the number 5 from the list
+
+var lst2;
+
+lcopy lst lst2; // Copies the elements of lst to lst2
+
+lappend lst lst2; // Appends all elements of lst2 to the end of lst **(klpanagi check this)**
 ```
-var i 9;
-var l [1,4,5,6];
-lset l i*2 3;
-```
-
-This means that in the 4th place of the list (index equal to 3), the value of `i*2` will be set.
-
-### `Get length`
-
-You can assign a list's length in a variable as such:
-
-```
-var len;
-var lst [1,3,4];
-set len llength(lst);
-```
-
-This sets variable `len` to 3.
-
-### `Append`
-
-You can append a value in a list as such:
-
-```
-var i 10;
-var lst [1,4,5];
-lappend(lst, 1+4+5+i);
-```
-
-This will append the value 20 to the end of the list, resulting in `[1,4,5,20]`.
-
-### `Remove`
-
-You can remove an element of the list by index as such:
-
-```
-var lst [1,3,5,10];
-lremove(lst, 0);
-```
-
-This will result in the removal of the first element of the list, whose final value will be `[3,5,10]`.
-
-### `Insert`
-
-You can insert an element at a specific place (index) in the list as such:
-
-```
-var i 4;
-var lst [3,5,7];
-linsert(lst, i, 1);
-```
-
-This means that the value of variable `i` (4) will be inserted at the 2nd place of the list, between 3 and 5. The final list will have this value: `[3,4,5,7]`.
-
-### `Sort`
-
-You can sort a list in a descending or an ascending order as such:
-
-```
-var lst [1,9,2,8];
-lsort(lst, asc);
-lsort(lst, dec);
-```
-
-This application will first sort the list in an ascending order and then in a descending order, resulting in `[9,8,2,1]`. 
-
-### `Reverse`
-
-You can reverse the order of the elements in a list as such:
-
-```
-var lst [1,6,9,2];
-lreverse(lst);
-```
-
-This will result in the list having the following value: `[2,9,6,1]`.
-
-### `Get element by index`
-
-You can get the value at a specific index as such:
-
-```
-var lst [4,5,6];
-var i lvalue(lst, 0);
-```
-
-This application sets variable `i` with the value 4 (the value at the index 0 of the list).
-
-### `Index of`
-
-You can find the index of an element in a list as such:
-
-```
-var lst [5,8,10];
-var i 10/2;
-var exists lindex(lst, i);
-```
-
-This way, the variable `exists` will take the `0` value, since 5 exists in the first place of the list. If the value does not exist in the list -1 is returned.
-
-### `Contains`
-
-```
-var lst [5,8,10];
-var i 5;
-var exists lcontains(lst, i);
-```
-
-This way, the variable `exists` will take the value `True`, since 5 exists in the first place of the list.
-
-### `To be done`
-
-- min
-- max
-- average
-- std
-- element count
-- pop
-- clear
-- delete by value
-- copy list to list
-- append list to list
 
 ## Conditions
 
 You can declare a condition as such:
 
-```
+```js
 var i 0;
 if i == 0 {
   set i i+1;
@@ -221,7 +140,7 @@ As evident, you must use the keyword `if`, followed by the expression you want, 
 
 You can implement loops as such:
 
-```
+```js
 var i 0, j 10, k;
 loop i 0..j {
   set k k+i;
@@ -238,7 +157,7 @@ PseudoDSL also supports parallel execution of blocks of expressions, implementin
 
 In order to execute a number of expressions in parallel, you must declare them inside a `Task`. You can create a Task as such:
 
-```
+```js
 var i 0, k;
 T - task1 ((
   loop i 0..10 {
@@ -253,7 +172,7 @@ Here `task1` is the ID of this task and you will use it in order to reference it
 
 In order to use threads, you must have two Tasks (or more) that will be deployed in seperate threads, in parallel. Here is an example:
 
-```
+```js
 var i 0, j 0, sum1 0, sum2 0, sum;
 
 T - task1 ((
@@ -282,7 +201,7 @@ Then the total sum is the sum of the two other sums :).
 
 You also have the option to kill a Task from another Task. You can do this as such:
 
-```
+```js
 var i 0, j 0, sum1 0, sum2 0, sum;
 
 T - task1 ((
@@ -312,7 +231,7 @@ Here we have the two previous threads, but the second iterates up to 5000. We ha
 
 You can use the Go to command to move the execution to another point in the program. For example we could implement a loop using go to as such:
 
-```
+```js
 var i 0;
 [ls] set i i+1;
 if i<10 {
@@ -326,7 +245,7 @@ This code increases i by one, until it is greater than 9. The `set` command is a
 
 The print command prints whatever expression you add next to it. Some examples are:
 
-```
+```js
 var i 0, j 10, k i*j;
 print i;
 print "This is i:" + i;
@@ -337,7 +256,7 @@ print k*i*j;
 
 The delay command adds a delay in seconds whenever the user wants. Example:
 
-```
+```js
 var i 0;
 [ls] set i i+1;
 if i<10 {
@@ -354,7 +273,7 @@ Exit is a simple command: it exits the program when called!
 
 Example:
 
-```
+```js
 var i 0;
 [ls] set i i+1;
 if i<10 {
