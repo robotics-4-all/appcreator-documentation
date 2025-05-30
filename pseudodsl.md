@@ -348,5 +348,22 @@ if i<10 {
 
 Here, the program will delay more and more when i increases.
 
-### `Random number`
 ### `Exit`
+
+Exit is a simple command: it exits the program when called!
+
+Example:
+
+```
+var i 0;
+[ls] set i i+1;
+if i<10 {
+  delay i;
+  goto [ls];
+};
+
+exit;
+print i;
+```
+
+Here, the final print will not be executed.
