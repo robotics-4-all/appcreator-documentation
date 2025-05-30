@@ -225,21 +225,91 @@ You can implement loops as such:
 var i 0, j 10, k;
 loop i 0..j {
   set k k+i;
-}
+};
 ```
 
-As evident
+This will iterate variable `i` from 0 to the value of `j-1` (as long as `i<j`).
 
 ## Threads and tasks
 
+PseudoDSL also supports parallel execution of blocks of expressions, implementing threads.
+
 ### `Task declaration`
-### `Create threads`
-### `Join threads`
+
+In order to execute a number of expressions in parallel, you must declare them inside a `Task`. You can create a Task as such:
+
+```
+var i 0, k;
+T - task1 ((
+  loop i 0..10 {
+    set k k+1;
+  }
+));
+```
+
+Here `task1` is the ID of this task and you will use it in order to reference it in thread creation.
+
+### `Create and join threads`
+
+In order to use threads, you must have two Tasks (or more) that will be deployed in seperate threads, in parallel. Here is an example:
+
+```
+var i 0, j 0, sum1 0, sum2 0, sum;
+
+T - task1 ((
+  loop i 1..501 {
+    set sum1 sum1+1;
+  };
+));
+
+T - task2 ((
+  loop j 501..1001 {
+    set sum2 sum2+1;
+  };
+));
+
+split task1, task2;
+join task1, task2;
+
+set sum sum1+sum2;
+```
+
+This piece of code calculates the sum of numbers from 1 to 1000 using two threads, one that calculates the sum from 1 to 500 and another that calculates the sum from 501 to 1000.
+The threads are created and the `join` command waits until both threads are finished.
+Then the total sum is the sum of the two other sums :).
+
 ### `Kill thread`
 
-## Others
+You also have the option to kill a Task from another Task. You can do this as such:
+
+```
+var i 0, j 0, sum1 0, sum2 0, sum;
+
+T - task1 ((
+  loop i 1..501 {
+    set sum1 sum1+1;
+  };
+  kill task2;
+));
+
+T - task2 ((
+  loop j 501..5001 {
+    set sum2 sum2+1;
+  };
+));
+
+split task1, task2;
+join task1, task2;
+
+set sum sum1+sum2;
+```
+
+Here we have the two previous threads, but the second iterates up to 5000. We have added the `kill task2;` command at the end of the iteration in the first Task, thus the task2 will be abruptly stopped at that time. This of course will lead to unexpected output value due to timing uncertainties.
+
+## Other commands
 
 ### `Go to`
 ### `Print`
 ### `Delay`
 ### `Random number`
+### `Exit`
