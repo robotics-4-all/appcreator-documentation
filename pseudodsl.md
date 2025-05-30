@@ -309,7 +309,44 @@ Here we have the two previous threads, but the second iterates up to 5000. We ha
 ## Other commands
 
 ### `Go to`
+
+You can use the Go to command to move the execution to another point in the program. For example we could implement a loop using go to as such:
+
+```
+var i 0;
+[ls] set i i+1;
+if i<10 {
+  goto [ls];
+};
+```
+
+This code increases i by one, until it is greater than 9. The `set` command is assigned a tag, so that the `goto` command can use it to jump whenever the user desires.
+
 ### `Print`
+
+The print command prints whatever expression you add next to it. Some examples are:
+
+```
+var i 0, j 10, k i*j;
+print i;
+print "This is i:" + i;
+print k*i*j;
+```
+
 ### `Delay`
+
+The delay command adds a delay in seconds whenever the user wants. Example:
+
+```
+var i 0;
+[ls] set i i+1;
+if i<10 {
+  delay i;
+  goto [ls];
+};
+```
+
+Here, the program will delay more and more when i increases.
+
 ### `Random number`
 ### `Exit`
