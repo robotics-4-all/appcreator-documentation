@@ -103,13 +103,7 @@ lappend lst j; // Appends the value of variable j at the end of the list
 
 lremove lst 1; // Removes the element with index=1 from the list
 
-linsert lst 0 15; // Inserts the number 15 at the first place of the list (index = 0)
-
 lsort lst asc; // Sorts the list in an ascending manner (or dec for a descending)
-
-lreverse lst; // Reverses the elements of the list
-
-lpop lst 1; // Removes the element at index = 1 **(isn't this the same as lremove??)**
 
 lclear lst; // Removes all elements from the list
 
@@ -119,7 +113,7 @@ var lst2;
 
 lcopy lst lst2; // Copies the elements of lst to lst2
 
-lappend lst lst2; // Appends all elements of lst2 to the end of lst **(klpanagi check this)**
+lappend lst lst2; // Appends all elements of lst2 to the end of lst
 ```
 
 ## Conditions
@@ -130,7 +124,7 @@ You can declare a condition as such:
 var i 0;
 if i == 0 {
   set i i+1;
-}
+};
 set i i-1;
 ```
 
@@ -153,21 +147,6 @@ This will iterate variable `i` from 0 to the value of `j-1` (as long as `i<j`).
 
 PseudoDSL also supports parallel execution of blocks of expressions, implementing threads.
 
-### `Task declaration`
-
-In order to execute a number of expressions in parallel, you must declare them inside a `Task`. You can create a Task as such:
-
-```js
-var i 0, k;
-T - task1 ((
-  loop i 0..10 {
-    set k k+1;
-  }
-));
-```
-
-Here `task1` is the ID of this task and you will use it in order to reference it in thread creation.
-
 ### `Create and join threads`
 
 In order to use threads, you must have two Tasks (or more) that will be deployed in seperate threads, in parallel. Here is an example:
@@ -175,21 +154,23 @@ In order to use threads, you must have two Tasks (or more) that will be deployed
 ```js
 var i 0, j 0, sum1 0, sum2 0, sum;
 
-T - task1 ((
+// Task Split Block -------------->
+split 2;
+// -----------Task 1 block ------
+[T1] ((
   loop i 1..501 {
     set sum1 sum1+1;
   };
 ));
-
-T - task2 ((
+// -----------Task 2 block ------
+[T2] task2 ((
   loop j 501..1001 {
     set sum2 sum2+1;
   };
 ));
 
-split task1, task2;
-join task1, task2;
-
+join;
+// --------------------------------;
 set sum sum1+sum2;
 ```
 
@@ -204,42 +185,30 @@ You also have the option to kill a Task from another Task. You can do this as su
 ```js
 var i 0, j 0, sum1 0, sum2 0, sum;
 
-T - task1 ((
+// Task Split Block -------------->
+split 2;
+// -----------Task 1 block ------
+[T1] ((
   loop i 1..501 {
     set sum1 sum1+1;
   };
-  kill task2;
+  kill [T2];
 ));
-
-T - task2 ((
+// -----------Task 2 block ------
+[T2] ((
   loop j 501..5001 {
     set sum2 sum2+1;
   };
 ));
 
-split task1, task2;
-join task1, task2;
-
+join;
+// --------------------------------
 set sum sum1+sum2;
 ```
 
 Here we have the two previous threads, but the second iterates up to 5000. We have added the `kill task2;` command at the end of the iteration in the first Task, thus the task2 will be abruptly stopped at that time. This of course will lead to unexpected output value due to timing uncertainties.
 
 ## Other commands
-
-### `Go to`
-
-You can use the Go to command to move the execution to another point in the program. For example we could implement a loop using go to as such:
-
-```js
-var i 0;
-[ls] set i i+1;
-if i<10 {
-  goto [ls];
-};
-```
-
-This code increases i by one, until it is greater than 9. The `set` command is assigned a tag, so that the `goto` command can use it to jump whenever the user desires.
 
 ### `Print`
 
@@ -286,3 +255,17 @@ print i;
 ```
 
 Here, the final print will not be executed.
+
+### `Go to`
+
+You can use the Go to command to move the execution to another point in the program. For example we could implement a loop using go to as such:
+
+```js
+var i 0;
+[ls] set i i+1;
+if i<10 {
+  goto [ls];
+};
+```
+
+This code increases i by one, until it is greater than 9. The `set` command is assigned a tag, so that the `goto` command can use it to jump whenever the user desires.
