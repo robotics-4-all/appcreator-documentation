@@ -84,47 +84,122 @@ var i;
 set i llength lst; // Sets i equal to the lists length (5)
 ```
 
-Below are examples of available buildin `ListReadOperations` and `ListWriteOperations`:
+### List Read Operations
+
+- `ListLength`: Returns the length of a list
+  - Syntax: `llength <List Name>`
+- `ListMin`: Returns the minimum value from a list
+  - Syntax: `lmin <List Name>`
+- `ListMax`: Returns the maximum value from a list
+  - Syntax: `lmin <List Name>`
+- `ListAverage`: Returns the average of a list
+  - Syntax: `laverage <List Name>`
+- `ListStd`: Returns the standard deviations of a list
+  - Syntax: `lstd <List Name>`
+- `ListValueAtIndex`: Returns the list element at given index
+  - Syntax: `lget <List Name> <Index (Expression)>`
+- `ListIndexOf`: Returns the (first) index of given value
+  - Syntax: `lindex <List Name> <Value (Expression)>`
+- `ListContains`: Returns `True` if the list contains
+  - Syntax: `lcontains <List Name> <Value (Expression)>`
+- `ListCount`: Returns the number of times a value exists in a list
+  - Syntax: `lcount <List Name> <Value (Expression)>`
+
+Usage Examples:
 
 ```javascript
-var lst [1,4,7,9,3];
-var i;
+var f [1,2,3,4];
+// Set list value by index
+set f 0 5;
+var g;
+set g lget f 0;
+set g llength f;
+set g lcount f 1;
+set g lmin f;
+set g lmax f;
+set g laverage f;
+set g lindex f 3;
+```
 
-set i llength lst; // Sets i equal to the lists length (5)
+### List Write Operations
 
-set i lvalue lst 2; // Sets i equal to the element of the list at index=2 (third place)
+- `ListAppend`: Append (adds) a value to a list
+  - Syntax: `lappend <List Name> <Value (Expression)>`
+- `ListRemove`: Remove an element from a list given its' index
+  - Syntax: `lremove <List Name> <Index (Expression)>`
+- `ListPop`: Remove the last element from a list (pop)
+  - Syntax: `lpop <List Name> <Index (Expression)>`
+- `ListClear`: Clears a list. 
+  - Syntax: `lclear <List Name>`
+- `ListRemoveValue`: Remove the last elements with given values from a list.
+  - Syntax: `lremval <List Name> <Value (Expression)>`
+- `ListCopy`: Remove the last elements with given values from a list.
+  - Syntax: `lremval <Source List Name> <Destination List Name>`
 
-set i lindex lst 9; // Sets i equal to the index where the value 9 exists
+```javascript
+// Set element at index
+var i 9;
+var l [1,4,5,6];
+set l 3 i*2;
 
-set i lcontains lst 7; // Sets i=true if value 7 exists in the list
+// Get list length
+var len;
+var lst [1,3,4];
+set len llength lst ;
 
-set i lmin lst; // Sets i equal to the minimum element of the list (1)
+// Append to a list
+var i 10;
+var lst [1,4,5];
+var lstb [3,7,4];
+lappend lst 1+4+5+i;
 
-set i lmax lst; // Sets i equal to the maximum element of the list (9)
+// Append a list into a list
+lappend lst lstb;
 
-set i laverage lst; // Sets i equal to the mean value of the elements of the list
+// Remove an element of a list by index
+var lst [1,3,5,10];
+lremove lst 0;
 
-set i lstd lst; // Sets i equal to the standard deviation of the elements of the list
+// Insert value in a list
+var i 4;
+var lst [3,5,7];
+set lst i 1;
 
-set lcount lst 8; // Sets i equal to the number of occurences of 8 in the list (0)
+// Sort list
+var lst [1,9,2,8];
+var lst_b;
+lsort lst asc;
+lsort lst desc;
+lsort lst asc lst_b;  // change target variable. Store sort result in lst_b
 
-var j 5;
+// Get list element by index
+var lst [4,5,6];
+set i lget lst 0;
 
-lappend lst j; // Appends the value of variable j at the end of the list
+// Find the index of an element in a list
+var lst [5,8,10];
+var i 10/2, exists;
+set exists lindex lst i;
 
-lremove lst 1; // Removes the element with index=1 from the list
+// Min/Max/Average/Std of values in a list
+var lst [1,6,9,2,1];
+var m;
+set m lmax lst ;
+set m lmin lst ;
+set m laverage lst ;
+set m lstd lst ;
+set m lcount lst 1 ;
 
-lsort lst asc; // Sorts the list in an ascending manner (or dec for a descending)
+// Check wheather a list contains a value
+var lst [5,8,10];
+var i 5;
+var exists;
+set exists lcontains lst i;
 
-lclear lst; // Removes all elements from the list
-
-lremval lst 5; // Removes all occurences of the number 5 from the list
-
-var lst2;
-
-lcopy lst lst2; // Copies the elements of lst to lst2
-
-lappend lst lst2; // Appends all elements of lst2 to the end of lst
+// Copy List
+var l_1 [0,1,3];
+var tmp;
+lcopy l_1 tmp;
 ```
 
 ## Conditions
