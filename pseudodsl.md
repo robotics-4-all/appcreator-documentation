@@ -73,29 +73,40 @@ var list [i, j, 11, i+j];
 
 ## List operations
 
-If we  have declared a list, we can perform several operations on it. These operations are shown in a full example:
+List operations are divided into `ListReadOperations` and `ListWriteOperations`. The first are used among the `set` command to assign the output to a variable, while the latter are used as separate language builtin commands.
+
+For example, if we want to get the length of a list, we must use the `llength` command to perform the operation, within a `set` command to assign the output value to a variable.
 
 ```javascript
 var lst [1,4,7,9,3];
 var i;
 
-set i llength(lst); // Sets i equal to the lists length (5)
+set i llength lst; // Sets i equal to the lists length (5)
+```
 
-set i lvalue(lst 2); // Sets i equal to the element of the list at index=2 (third place)
+Below are examples of available buildin `ListReadOperations` and `ListWriteOperations`:
 
-set i lindex(lst 9); // Sets i equal to the index where the value 9 exists
+```javascript
+var lst [1,4,7,9,3];
+var i;
 
-set i lcontains(lst 7); // Sets i=true if value 7 exists in the list
+set i llength lst; // Sets i equal to the lists length (5)
 
-set i lmin(lst); // Sets i equal to the minimum element of the list (1)
+set i lvalue lst 2; // Sets i equal to the element of the list at index=2 (third place)
 
-set i lmax(lst); // Sets i equal to the maximum element of the list (9)
+set i lindex lst 9; // Sets i equal to the index where the value 9 exists
 
-set i laverage(lst); // Sets i equal to the mean value of the elements of the list
+set i lcontains lst 7; // Sets i=true if value 7 exists in the list
 
-set i lstd(lst); // Sets i equal to the standard deviation of the elements of the list
+set i lmin lst; // Sets i equal to the minimum element of the list (1)
 
-set lcount(lst 8); // Sets i equal to the number of occurences of 8 in the list (0)
+set i lmax lst; // Sets i equal to the maximum element of the list (9)
+
+set i laverage lst; // Sets i equal to the mean value of the elements of the list
+
+set i lstd lst; // Sets i equal to the standard deviation of the elements of the list
+
+set lcount lst 8; // Sets i equal to the number of occurences of 8 in the list (0)
 
 var j 5;
 
