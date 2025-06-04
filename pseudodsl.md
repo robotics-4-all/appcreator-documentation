@@ -68,7 +68,7 @@ Or even:
 
 ```js
 var i 8, j 9;
-var list [i, j, 11, i+j];
+var list [i, j, 11, 10];
 ```
 
 ## List operations
