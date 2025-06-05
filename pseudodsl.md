@@ -229,7 +229,7 @@ loop i 0..j {
 
 This will iterate variable `i` from 0 to the value of `j-1` (as long as `i<j`).
 
-## Threads and tasks
+## Tasks & Concurrency
 
 PseudoDSL also supports parallel execution of blocks of expressions, implementing threads.
 
