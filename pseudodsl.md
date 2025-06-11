@@ -249,7 +249,7 @@ split 2;
   };
 ));
 // -----------Task 2 block ------
-[T2] task2 ((
+[T2] ((
   loop j 501..1001 {
     set sum2 sum2+1;
   };
