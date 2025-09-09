@@ -224,7 +224,7 @@ MySQL query:
     outputs: 1
     action:
         type: RestCall
-        restAPI: TodosAPI
+        RestAPI: TodosAPI
         verb: GET
         path: "/posts"
         query_params:
